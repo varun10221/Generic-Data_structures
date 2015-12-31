@@ -95,3 +95,4 @@ int main (int argc, char* argv[]){
     printf ("\npostorder :\n");
     postorder (root);
     return 0;
+}
