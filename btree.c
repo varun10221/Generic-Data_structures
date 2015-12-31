@@ -97,3 +97,12 @@ visit (struct tree_node *tree)
 {
   printf ("Data:%d \n", tree->data);
 }
+
+
+void
+tree_bst (struct tree_node *tree)
+{
+
+ return ;
+
+}
