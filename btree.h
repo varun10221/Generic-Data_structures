@@ -12,3 +12,5 @@ void inorder (struct tree_node *);
 void visit (struct tree_node*);
 void bst_insert (struct tree_node **, int);
 void print_tree(struct tree_node *);
+void tree_read();
+void insert();

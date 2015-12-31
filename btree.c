@@ -58,22 +58,36 @@ void inorder (struct tree_node *tree){
    }
 }
 
-
 void visit (struct tree_node *tree){
   printf ("Data:%d \n", tree->data);
 }
 
-int main (){
- int i;
- for (i = 0; i <= 10; i++){
-         bst_insert (&root, rand());
-  }
-  print_tree (root);
-  printf ("preorder :\n");
-  preorder (root);
-  printf ("inorder :\n");
-  inorder (root);
-  printf ("postorder :\n");
-  postorder (root);
-  return 0;
+
+void tree_read(FILE **fptr){
+  char c;
+  while ((c = fgetc(*fptr)) != EOF)
+
+}
+
+int main (int argc, char* argv[]){
+    int i;
+    FILE *fin;
+
+    if(argc < 2)
+    exit(0);
+    else
+    fin = fopen(argv[1],"r");
+
+    tree_read(&fin);
+    for (i = 0; i <= 10; i++){
+           bst_insert (&root, rand());
+    }
+    print_tree (root);
+    printf ("\npreorder :\n");
+    preorder (root);
+    printf ("\ninorder :\n");
+    inorder (root);
+    printf ("\npostorder :\n");
+    postorder (root);
+    return 0;
 }
