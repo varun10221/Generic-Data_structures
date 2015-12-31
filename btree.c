@@ -62,10 +62,15 @@ void visit (struct tree_node *tree){
   printf ("Data:%d \n", tree->data);
 }
 
-
 void tree_read(FILE **fptr){
   char c;
   while ((c = fgetc(*fptr)) != EOF)
+
+}
+
+void tree_bst (struct tree_node *tree){
+
+ return ;
 
 }
 
@@ -90,4 +95,3 @@ int main (int argc, char* argv[]){
     printf ("\npostorder :\n");
     postorder (root);
     return 0;
-}
