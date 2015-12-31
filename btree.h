@@ -9,6 +9,6 @@ struct tree_node{
 void preorder (struct tree_node *);
 void postorder (struct tree_node *);
 void inorder (struct tree_node *);
-void visit (struct tree_node);
+void visit (struct tree_node*);
 void bst_insert (struct tree_node **, int);
 void print_tree(struct tree_node *);
