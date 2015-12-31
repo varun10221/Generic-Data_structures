@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define MAXWORDSIZE 64
+
 struct tree_node{
   int data;
   struct tree_node *left, *right;
@@ -13,5 +15,4 @@ void visit (struct tree_node*);
 void bst_insert (struct tree_node **, int);
 void tree_bfs (struct tree_node *);
 void print_tree(struct tree_node *);
-void tree_read(FILE **);
-void insert(struct tree_node **, char );
+struct tree_node* insert(FILE *in);

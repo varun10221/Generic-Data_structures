@@ -62,30 +62,16 @@ void visit (struct tree_node *tree){
   printf ("Data:%d \n", tree->data);
 }
 
-void tree_read(FILE **fptr){
-  char c;
-  while ((c = fgetc(*fptr)) != EOF)
-        insert(&root,c);
-}
-
-void insert(struct tree_node **node, char c){
-  if(*node == NULL){
-    *node = (struct tree_node*) malloc (sizeof(struct tree_node));
-    if(*node != NULL){
-      if(c == '@')
-        (*node) = NULL ;
-      else{
-        (*node)->data = c ;
-        (*node)->left = NULL;
-        (*node)->right= NULL;
-      }
-    }
-  }
-  else{
-
-
-  }
-
+struct tree_node* insert(FILE *fptr){
+    char str[MAXWORDSIZE+1];
+    char *ch;
+    fscanf(fptr, "%c", ch);
+    if (strcmp(ch,"@") == 0) return NULL;
+    struct tree_node* p = (struct tree_node*) malloc(sizeof(struct tree_node));
+    p -> data = (int)(*ch) ;
+    p -> left = insert(fptr);
+    p -> right = insert(fptr);
+    return p;
 }
 
 void tree_bst (struct tree_node *tree){
@@ -98,15 +84,19 @@ int main (int argc, char* argv[]){
     int i;
     FILE *fin;
 
-    if(argc < 2)
-    exit(0);
-    else
-    fin = fopen(argv[1],"r");
-
-    tree_read(&fin);
+    if(argc < 2){
+      printf("\nEnter the file name. Exiting...\n");
+      exit(0);
+    }
+    else{
+      fin = fopen(argv[1],"r");
+      insert(fin);
+    }
+    /*
     for (i = 0; i <= 10; i++){
            bst_insert (&root, rand());
     }
+    */
     print_tree (root);
     printf ("\npreorder :\n");
     preorder (root);
