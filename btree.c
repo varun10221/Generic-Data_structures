@@ -65,6 +65,26 @@ void visit (struct tree_node *tree){
 void tree_read(FILE **fptr){
   char c;
   while ((c = fgetc(*fptr)) != EOF)
+        insert(&root,c);
+}
+
+void insert(struct tree_node **node, char c){
+  if(*node == NULL){
+    *node = (struct tree_node*) malloc (sizeof(struct tree_node));
+    if(*node != NULL){
+      if(c == '@')
+        (*node) = NULL ;
+      else{
+        (*node)->data = c ;
+        (*node)->left = NULL;
+        (*node)->right= NULL;
+      }
+    }
+  }
+  else{
+
+
+  }
 
 }
 
