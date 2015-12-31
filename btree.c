@@ -2,26 +2,28 @@
 #include <stdlib.h>
 #include "btree.h"
 
-
-
 struct tree_node *root;
 
-void bst_insert (struct tree_node **tree, struct tree_node *item){
+void bst_insert (struct tree_node **tree, int num){
   if (*tree == NULL) {
-      *tree = item;
-       return;
-   }
+      *tree = (struct tree_node*) malloc (sizeof(struct tree_node));
+      if(*tree != NULL){
+        (*tree)->data = num ;
+        (*tree)->left = NULL;
+        (*tree)->right= NULL;
+      }
+      return;
+  }
 
-  if (item->data < (*tree)->data)
-    insert (&(*tree)->left, item);
+  if (num < (*tree)->data)
+    bst_insert (&(*tree)->left, num);
 
-  else if (item->data > (*tree)->data)
-     insert (&(*tree)->right, item);
+  else if (num > (*tree)->data)
+    bst_insert (&(*tree)->right, num);
 }
 
 
-void
-print_tree (struct tree_node *tree)
+void print_tree (struct tree_node *tree)
 {
   if (tree->left != NULL)
     print_tree (tree->left);
@@ -31,48 +33,16 @@ print_tree (struct tree_node *tree)
     print_tree (tree->right);
 }
 
-void
-main ()
-{
- int i;
-
- for (i = 0; i <= 10; i++)
-  {
-    current = (struct tree_node *) malloc (sizeof (struct tree_node));
-    if (current != NULL)
-      {
-         current->left = current->right = NULL;
-         current->data = rand ();
-         insert (&root, current);
-      }
-  }
-
-  print_tree (root);
-  printf ("preorder :\n");
-  preorder (root);
-  printf ("inorder :\n");
-  inorder (root);
-  printf ("postorder :\n");
-  postorder (root);
-}
-
-static void
-preorder (struct tree_node *tree)
-{
-  if (tree != NULL)
-   {
+void preorder (struct tree_node *tree){
+  if (tree != NULL){
       visit (tree);
       preorder (tree->left);
       preorder (tree->right);
    }
 }
 
-static void
-postorder (struct tree_node *tree)
-{
-  if (tree != NULL)
-   {
-
+void postorder (struct tree_node *tree){
+  if (tree != NULL){
       visit (tree);
       postorder (tree->left);
       postorder (tree->right);
@@ -80,11 +50,8 @@ postorder (struct tree_node *tree)
 }
 
 
-static void
-inorder (struct tree_node *tree)
-{
-  if (tree != NULL)
-   {
+void inorder (struct tree_node *tree){
+  if (tree != NULL){
       inorder (tree->left);
       visit (tree);
       inorder (tree->right);
@@ -92,9 +59,7 @@ inorder (struct tree_node *tree)
 }
 
 
-static void
-visit (struct tree_node *tree)
-{
+void visit (struct tree_node *tree){
   printf ("Data:%d \n", tree->data);
 }
 
@@ -105,4 +70,21 @@ tree_bst (struct tree_node *tree)
 
  return ;
 
+}
+
+int main ()
+{
+  int i;
+  for (i = 0; i <= 10; i++)
+    {
+      bst_insert (&root, rand());
+    }
+  print_tree (root);
+  printf ("preorder :\n");
+  preorder (root);
+  printf ("inorder :\n");
+  inorder (root);
+  printf ("postorder :\n");
+  postorder (root);
+  return 0;
 }
