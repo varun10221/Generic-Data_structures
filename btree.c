@@ -82,7 +82,7 @@ tree_bfs (struct tree_node *tree)
     return ;
 
   struct tree_node *temp;
-
+  struct queue *temp_queue;
   /* Creates a queue */
   tree_queue = queue_create ();
 
