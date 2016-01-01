@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "btree.h"
+#include "queue.h"
 
 struct tree_node *root;
 
@@ -27,7 +29,7 @@ void print_tree (struct tree_node *tree)
 {
   if (tree->left != NULL)
     print_tree (tree->left);
-  printf ("%d\n", tree->data);
+  printf ("%c\n", tree->data);
 
   if (tree->right != NULL)
     print_tree (tree->right);
@@ -58,11 +60,20 @@ void inorder (struct tree_node *tree){
    }
 }
 
-
 void visit (struct tree_node *tree){
-  printf ("Data:%d \n", tree->data);
+  printf ("Data:%c \n", tree->data);
 }
 
+struct tree_node* insert(FILE *fptr){
+    char ch ;
+    ch = fgetc(fptr);
+    if (ch == '@') return NULL;
+    struct tree_node* p = (struct tree_node*) malloc(sizeof(struct tree_node));
+    p -> data = ch ;
+    p -> left = insert(fptr);
+    p -> right = insert(fptr);
+    return p;
+}
 
 void
 tree_bst (struct tree_node *tree)
@@ -91,22 +102,31 @@ tree_bst (struct tree_node *tree)
      }
        
   queue_destroy (tree_queue);
-
 }
 
-int main ()
-{
-  int i;
-  for (i = 0; i <= 10; i++)
-    {
-      bst_insert (&root, rand());
+int main (int argc, char* argv[]){
+    int i;
+    FILE *fin;
+
+    if(argc < 2){
+      printf("\nEnter the file name. Exiting...\n");
+      exit(0);
     }
-  print_tree (root);
-  printf ("preorder :\n");
-  preorder (root);
-  printf ("inorder :\n");
-  inorder (root);
-  printf ("postorder :\n");
-  postorder (root);
-  return 0;
+    else{
+      fin = fopen(argv[1],"r");
+      root = insert(fin);
+    }
+    /*
+    for (i = 0; i <= 10; i++){
+           bst_insert (&root, rand());
+    }
+    */
+    print_tree (root);
+    printf ("\npreorder :\n");
+    preorder (root);
+    printf ("\ninorder :\n");
+    inorder (root);
+    printf ("\npostorder :\n");
+    postorder (root);
+    return 0;
 }
