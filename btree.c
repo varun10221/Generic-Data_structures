@@ -76,16 +76,16 @@ struct tree_node* insert(FILE *fptr){
 }
 
 void
-tree_bst (struct tree_node *tree)
+tree_bfs (struct tree_node *tree)
 {
   if (tree == NULL)
     return ;
-  
+
   struct tree_node *temp;
 
-  /* Creates a queue */ 
+  /* Creates a queue */
   tree_queue = queue_create ();
- 
+
   /* Adding the tree to the queue */
   enqueue (tree_queue, tree);
 
@@ -93,14 +93,14 @@ tree_bst (struct tree_node *tree)
     {
       temp = dequeue (tree_queue);
       visit (temp);
-      
+
       if (temp->left != NULL)
          enqueue (tree_queue, temp->left);
-     
+
       if (temp->right != NULL)
           enqueue (tree_queue, temp->right);
      }
-       
+
   queue_destroy (tree_queue);
 }
 
