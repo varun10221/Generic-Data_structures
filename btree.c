@@ -67,8 +67,30 @@ void visit (struct tree_node *tree){
 void
 tree_bst (struct tree_node *tree)
 {
+  if (tree == NULL)
+    return ;
+  
+  struct tree_node *temp;
 
- return ;
+  /* Creates a queue */ 
+  tree_queue = queue_create ();
+ 
+  /* Adding the tree to the queue */
+  enqueue (tree_queue, tree);
+
+  while (! queue_is_empty (tree_queue))
+    {
+      temp = dequeue (tree_queue);
+      visit (temp);
+      
+      if (temp->left != NULL)
+         enqueue (tree_queue, temp->left);
+     
+      if (temp->right != NULL)
+          enqueue (tree_queue, temp->right);
+     }
+       
+  queue_destroy (tree_queue);
 
 }
 
