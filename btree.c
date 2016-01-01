@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "btree.h"
 
 struct tree_node *root;
@@ -27,7 +28,7 @@ void print_tree (struct tree_node *tree)
 {
   if (tree->left != NULL)
     print_tree (tree->left);
-  printf ("%d\n", tree->data);
+  printf ("%c\n", tree->data);
 
   if (tree->right != NULL)
     print_tree (tree->right);
@@ -59,16 +60,15 @@ void inorder (struct tree_node *tree){
 }
 
 void visit (struct tree_node *tree){
-  printf ("Data:%d \n", tree->data);
+  printf ("Data:%c \n", tree->data);
 }
 
 struct tree_node* insert(FILE *fptr){
-    char str[MAXWORDSIZE+1];
-    char *ch;
-    fscanf(fptr, "%c", ch);
-    if (strcmp(ch,"@") == 0) return NULL;
+    char ch ;
+    ch = fgetc(fptr);
+    if (ch == '@') return NULL;
     struct tree_node* p = (struct tree_node*) malloc(sizeof(struct tree_node));
-    p -> data = (int)(*ch) ;
+    p -> data = ch ;
     p -> left = insert(fptr);
     p -> right = insert(fptr);
     return p;
@@ -90,7 +90,7 @@ int main (int argc, char* argv[]){
     }
     else{
       fin = fopen(argv[1],"r");
-      insert(fin);
+      root = insert(fin);
     }
     /*
     for (i = 0; i <= 10; i++){

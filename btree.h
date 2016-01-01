@@ -7,7 +7,6 @@ struct tree_node{
   int data;
   struct tree_node *left, *right;
 };
-
 void preorder (struct tree_node *);
 void postorder (struct tree_node *);
 void inorder (struct tree_node *);
