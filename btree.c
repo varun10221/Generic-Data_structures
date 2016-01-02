@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "btree.h"
-#include "queue.h"
+#include "queue.c"
 
 struct tree_node *root;
 
@@ -82,26 +81,23 @@ tree_bfs (struct tree_node *tree)
     return ;
 
   struct tree_node *temp;
-  struct queue *temp_queue;
-  /* Creates a queue */
-  tree_queue = queue_create ();
+  struct queue *tree_queue;
 
   /* Adding the tree to the queue */
-  enqueue (tree_queue, tree);
+  enqueue (tree);
 
-  while (! queue_is_empty (tree_queue))
+  while (! queue_is_empty ())
     {
-      temp = dequeue (tree_queue);
+      temp = dequeue ();
       visit (temp);
 
       if (temp->left != NULL)
-         enqueue (tree_queue, temp->left);
+         enqueue (temp->left);
 
       if (temp->right != NULL)
-          enqueue (tree_queue, temp->right);
+          enqueue (temp->right);
      }
 
-  queue_destroy (tree_queue);
 }
 
 int main (int argc, char* argv[]){
@@ -116,12 +112,14 @@ int main (int argc, char* argv[]){
       fin = fopen(argv[1],"r");
       root = insert(fin);
     }
+
     /*
     for (i = 0; i <= 10; i++){
            bst_insert (&root, rand());
     }
     */
-    print_tree (root);
+   // print_tree (root);
+    tree_bfs(root);
     printf ("\npreorder :\n");
     preorder (root);
     printf ("\ninorder :\n");

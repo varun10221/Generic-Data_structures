@@ -3,91 +3,75 @@
 #include "queue.h"
 #include <stdbool.h>
 
-struct queue *
-queue_create (void)
-{
-
-  struct queue *temp_queue = malloc (sizeof (struct queue));
-  if (temp_queue == NULL)
-    return NULL;
-  
-  temp_queue->head = NULL;
-  temp_queue->capacity = 0;
-  
-  return temp_queue;   
-}
-
-
+struct queue* head = NULL;
+static int count = 0 ;
 void
-enqueue (struct queue *temp, int data)
+enqueue (struct tree_node* ptr)
 {
  
-  if (temp == NULL)
-    printf ("Enqueue_failed");
-
-  struct queue_elem *elem = malloc (sizeof (struct queue_elem));
-  if (elem != NULL)
-    {
-      elem->next = NULL;
-      elem->data = data;
+  if (head == NULL){
+    
+    head = (struct queue*)malloc (sizeof(struct queue));
+    if(head != NULL) {
+        head -> next = NULL;
+        head -> ptr = ptr ;
+        count = 1 ;
     }
-     
-  else printf ("Enqueue failed ");
+    
+  }
+    
+  else{  
+        struct queue* temp ;
+        temp = head ;
+        while (temp ->next != NULL)
+        {
+          temp = temp->next;
+        } 
 
-  struct queue_elem *node = NULL;
-
-  if (temp->head == NULL)
-    {
-      temp->head = elem;
-      temp->capacity = 1;
-      return;
-    }
-  node = temp->head;
-
-  while (node->next != NULL)
-    {
-      node = node->next;
-    } 
-  node->next = elem;
-  
-  temp->capacity = temp->capacity + 1;
-  return;
+        struct queue* node = (struct queue*)malloc (sizeof(struct queue));
+        if (node != NULL){
+            temp->next = node;
+            node->ptr = ptr;
+            node->next = NULL;
+            count++ ;
+        }
+  }
 }
       
 
-int 
-dequeue (struct queue *temp_queue)
+struct tree_node* 
+dequeue ()
 {
-  if (temp_queue == NULL)
+  if (head == NULL)
     {
-      printf ("No such queue exists");
-      return;
+      printf ("\nNo such queue exists\n");
+      return NULL;
     }
-  
-  int data;
 
-  if (queue_is_empty (temp_queue))
+  if (queue_is_empty ())
     {
-      printf ("Queue is empty");
+      printf ("\nQueue is empty\n");
+      return NULL;
     } 
     
-  if (temp_queue->head != NULL)
-    data = temp_queue->head->data;
+  if(head != NULL){
+    struct tree_node* data = head->ptr;
     
-  struct queue_elem *elem = temp_queue->head;
-  temp_queue->head = temp_queue->head->next;
+  struct queue *temp_head = head -> next;
   
-  free (elem);
+  free (head);
+  head = temp_head ;
+  count-- ;
   
   return data;
-
+    }
 }
 
 
 bool
-queue_is_empty (struct queue *temp)
+queue_is_empty ()
 {
-  if (temp != NULL && temp->head != NULL)
+  if (count == 0)
      return true;
 
   else return false;
