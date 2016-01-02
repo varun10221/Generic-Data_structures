@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 /* Implements a queue by means of a linked list, the queue is not thread_safe */
 

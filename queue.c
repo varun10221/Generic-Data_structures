@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "queue.h"
-
+#include <stdbool.h>
 
 struct queue *
 queue_create (void)
@@ -46,7 +46,7 @@ enqueue (struct queue *temp, int data)
 
   while (node->next != NULL)
     {
-      node = node->next
+      node = node->next;
     } 
   node->next = elem;
   
@@ -74,10 +74,10 @@ dequeue (struct queue *temp_queue)
   if (temp_queue->head != NULL)
     data = temp_queue->head->data;
     
-  struct queue_elem *elem = head;
+  struct queue_elem *elem = temp_queue->head;
   temp_queue->head = temp_queue->head->next;
   
-  free (head);
+  free (elem);
   
   return data;
 
