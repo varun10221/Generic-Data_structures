@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "gqueue.h"
 
 #define MAXWORDSIZE 64
 
-struct tree_node{
+struct tree_node
+{
   int data;
   struct tree_node *left, *right;
+  struct queue_elem elem;
 };
+
 void preorder (struct tree_node *);
 void postorder (struct tree_node *);
 void inorder (struct tree_node *);

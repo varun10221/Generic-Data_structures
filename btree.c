@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "queue.c"
+#include "btree.h"
 
 struct tree_node *root;
 
 void bst_insert (struct tree_node **tree, int num){
   if (*tree == NULL) {
-      *tree = (struct tree_node*) malloc (sizeof(struct tree_node));
+      *tree = (struct tree_node*) malloc (sizeof (struct tree_node));
       if(*tree != NULL){
         (*tree)->data = num ;
         (*tree)->left = NULL;
@@ -82,21 +82,25 @@ tree_bfs (struct tree_node *tree)
 
   struct tree_node *temp;
   struct queue *tree_queue;
-
+  struct queue_elem *e;
+  
   /* Adding the tree to the queue */
-  enqueue (tree);
+ 
+  tree_queue = queue_create ();
+  enqueue (tree_queue, &tree->elem);
 
-  while (! queue_is_empty ())
+  while (!queue_is_empty (tree_queue))
     {
-      temp = dequeue ();
+      e = dequeue (tree_queue);
+      temp = queue_entry (e, struct tree_node, elem); 
       visit (temp);
 
       if (temp->left != NULL)
-         enqueue (temp->left);
+         enqueue (tree_queue, &temp->left->elem);
 
       if (temp->right != NULL)
-          enqueue (temp->right);
-     }
+          enqueue (tree_queue, &temp->right->elem);
+    }
 
 }
 
