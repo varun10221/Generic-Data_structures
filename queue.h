@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+/* Implements a queue by means of a linked list, the queue is not thread_safe */
+
 /* Defines a queue as a basic linked list */
 struct queue
 {
@@ -15,8 +17,8 @@ struct queue_elem
 };
 
 struct queue * queue_create (void);
-void * enqueue (struct queue *, void *);
-void * dequeue (struct queue *);
+void enqueue (struct queue *, int);
+int  dequeue (struct queue *);
 bool queue_is_empty (struct queue *);
 
 
